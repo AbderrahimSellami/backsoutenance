@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'authentification',
     'corsheaders',
     'planning',
-    'utilisateurs'
+    'utilisateurs',
+    'enseignant',
 ]
 
 MIDDLEWARE = [

@@ -6,4 +6,6 @@ urlpatterns = [
     path('authentification/',include('authentification.urls'),name='authentification'),
     path('planning/',include('planning.urls'),name='planning'),
     path('utilisateurs/',include('utilisateurs.urls'),name='utilisateurs'),
+    path('enseignant/',include('enseignant.urls'),name='enseignant'),
+
 ]

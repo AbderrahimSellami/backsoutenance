@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.http import HttpResponse , HttpResponseRedirect
-from .models import utilisateurs
+from .models import Utilisateurs
 
 # Create your views here.
 
@@ -13,9 +13,10 @@ def utilisateurs(request):
 
 def comptes(request):
     if request.method == 'GET': 
+        print ("TEST")
         try:
             # Décoder la chaîne JSON
-            utilisateurs = utilisateurs.objects.all()
+            utilisateurs = Utilisateurs.objects.all()
 
             serialized_data = []
 
