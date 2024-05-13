@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'planning',
     'utilisateurs',
     'enseignant',
+    'etudiant',
 ]
 
 MIDDLEWARE = [
@@ -58,7 +59,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Remplacez par l'URL de votre application Vue.js
     "http://localhost:8000",
-    "http://localhost:8080",
+    "http://localhost:8081",
 ]
 
 ROOT_URLCONF = 'backsoutenance.urls'
