@@ -176,5 +176,4 @@ def proposer_theme(request):
         return JsonResponse({'success': True, 'message': 'Thème proposé avec succès'})
     else:
         # Répondre avec une erreur si la méthode n'est pas autorisée
-        return JsonResponse({'success': False, 'error': 'Method not allowed'}, status=405)
-
+        return JsonResponse({'success': False, 'error': 'Method not allowed'}, status=405)  
