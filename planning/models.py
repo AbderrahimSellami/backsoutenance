@@ -4,7 +4,7 @@ from django.db import models
 
 class Planning(models.Model):
     Theme = models.CharField(max_length=256)
-    Date = models.DateTimeField()
+    Date = models.CharField(max_length=256)
     Local = models.CharField(max_length=64)
     Binome = models.CharField(max_length=256)
     Encadreur = models.CharField(max_length=64)

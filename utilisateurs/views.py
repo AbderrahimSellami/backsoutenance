@@ -4,6 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from django.http import HttpResponse , HttpResponseRedirect
 from authentification.models import Admin , Teacher , Student
+from .models import Soutenance
 from itertools import chain
 
 def utilisateurs(request): 
@@ -115,3 +116,28 @@ def delete_user(request, user_id):
         except Exception as e:
             return JsonResponse({'success': False, 'message': str(e)}, status=500)
     
+
+
+@csrf_exempt
+def soutenance(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            soutenance = Soutenance(
+                nom=data['nom'],
+                prenom=data['prenom'],
+                specialite=data['specialite'],
+                theme=data['theme'],
+                enseignant=data['enseignant'],
+                president=data['president'],
+                examinateur1=data['examinateur1'],
+                examinateur2=data['examinateur2'],
+                Date_debut=data['Date_debut'],
+                Date_fin=data['Date_debut'],  # Assuming Date_fin is same as Date_debut
+                salle=data['salle']
+            )
+            soutenance.save()
+            return JsonResponse({'success': True})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    return JsonResponse({'error': 'Invalid method'}, status=405)
