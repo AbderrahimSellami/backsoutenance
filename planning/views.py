@@ -1,43 +1,45 @@
-from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
-from django.http import HttpResponse , HttpResponseRedirect
 from .models import Planning , Plateforme
 
-# Create your views here.
-
-def planning(request): 
-    return HttpResponse("planning")
-
-
+@csrf_exempt
 def get_planning(request):
-    if request.method == 'GET': 
+    if request.method == 'GET':
+        planning = list(Planning.objects.values())
+        return JsonResponse({'success': True, 'data': planning})
+    return JsonResponse({'success': False, 'error': 'Invalid method'}, status=405)
+
+@csrf_exempt
+def add_theme(request):
+    if request.method == 'POST':
         try:
-            # Décoder la chaîne JSON
-            planning_objects = Planning.objects.all()
+            data = json.loads(request.body)
+            planning = Planning(
+                Theme=data['Theme'],
+                Date=data['Date'],
+                Local=data['Local'],
+                Binome=data['Binome'],
+                Encadreur=data['Encadreur'],
+                Jury=data['Jury']
+            )
+            planning.save()
+            return JsonResponse({'success': True})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    return JsonResponse({'success': False, 'error': 'Invalid method'}, status=405)
 
-            serialized_data = []
+@csrf_exempt
+def delete_theme(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            Planning.objects.filter(id=data['id']).delete()
+            return JsonResponse({'success': True})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    return JsonResponse({'success': False, 'error': 'Invalid method'}, status=405)
 
-            for planning in planning_objects:
-                serialized_data.append({
-                    'id': planning.id,
-                    'theme': planning.Theme,
-                    'date': planning.Date,
-                    'local': planning.Local,
-                    'binome': planning.Binome,
-                    'encadreur': planning.Encadreur,
-                    'jury': planning.Jury,
-                })
-            
-            return JsonResponse({'success': True, 'data': serialized_data})
-        
-        except json.JSONDecodeError:
-            # Gérer les erreurs si les données ne peuvent pas être analysées en JSON
-            return JsonResponse({'success': False, 'error': 'Invalid JSON data'}, status=400)
-    else:
-        # Gérer les autres méthodes HTTP
-        return JsonResponse({'success': False, 'error': 'Only POST requests are allowed'}, status=405)
     
 
 import json
